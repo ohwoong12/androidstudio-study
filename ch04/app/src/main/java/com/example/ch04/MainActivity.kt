@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var text1: TextView
     lateinit var text2: TextView
     lateinit var checkAgree: CheckBox
-    lateinit var radioGroup1: RadioGroup    
+    lateinit var radioGroup1: RadioGroup
     lateinit var radioButton1: RadioButton
     lateinit var radioButton2: RadioButton
     lateinit var radioButton3: RadioButton
     lateinit var oKBtn: Button
     lateinit var petImg: ImageView
-    
+
     // onCreate는 앱의 진입점
     override fun onCreate(savedInstanceState: Bundle?) {    // Nullability in type system
         super.onCreate(savedInstanceState)
