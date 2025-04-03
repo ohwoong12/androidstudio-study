@@ -27,11 +27,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var radioButton3: RadioButton
     lateinit var oKBtn: Button
     lateinit var petImg: ImageView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+    
+    // onCreate는 앱의 진입점
+    override fun onCreate(savedInstanceState: Bundle?) {    // Nullability in type system
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)  // 레이아웃 정의
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
