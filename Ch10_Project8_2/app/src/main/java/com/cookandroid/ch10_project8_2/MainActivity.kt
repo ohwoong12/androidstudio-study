@@ -12,7 +12,7 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
 
     private val REQUEST_FOLDER = 1001               // SAF로 폴더를 선택할 때 구분용으로 쓰는 요청 코드 (임의의 숫자 사용 가능)
-    private lateinit var pictureView: MyPictureView // 이미지를 출력할 커스텀 뷰
+    private lateinit var pictureView: MyPictureView // 이미지를 출력할 커스텀 뷰 (그림을 직접 그리는 역할)
     private val imageUris = mutableListOf<Uri>()    // 폴더 내에 있는 이미지들의 URI를 저장하는 리스트
     private var currentIndex = 0                    // 현재 어떤 이미지가 선택되었는지를 나타내는 index
 
@@ -56,7 +56,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // SAF에서 폴더 선택이 끝났을 때 실행되는 함수
+    /**
+     * SAF에서 폴더 선택이 끝났을 때 실행되는 함수
+     * SAF로 폴더나 파일을 선택하고 돌아왔을 때 Android 시스템이 자동으로 호출해주는 콜백 함수
+     * startActivityResult()로 폴더 선택 액티비티를 띄운 후 -> 사용자가 선택 완료 -> 결과를 이 함수에서 처리
+     * 사용자가 폴더를 선택하면 결과가 자동으로 onActivityResult()로 전달되기 때문에 오버라이드 하지 않으면 처리 불가능
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -65,18 +70,20 @@ class MainActivity : AppCompatActivity() {
             val treeUri: Uri = data?.data ?: return // 선택된 폴더의 경로(Uri)를 가져옴, 만약 null이면 중단
 
             // 선택한 폴더에 대해 지속적인 읽기 권한 부여 (재실행시에도 유지)
+            // SAF는 보안상 기본적으로 일회성 접그만 허용됨
             contentResolver.takePersistableUriPermission(
                 treeUri,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             )
 
-            // 이미지 목록 초기화 (기존 자료 삭제)
+            // 이미지 목록 초기화 (기존 URI 리스트 초기화)
             imageUris.clear()
 
-            // 선택한 폴더를 documentFile 객체로 변환
+            // 선택한 폴더를 documentFile 객체로 변환하여 탐색 가능하게 함
             val SelectedDir = DocumentFile.fromTreeUri(this, treeUri)
 
             // 폴더 내부의 파일들을 검사하여 파일인지 확인하고, 이미지까지 확인하는 if문
+            // image/로 시작하는 MIME 타입(jpg, png 등)만 추출하여 리스트에 저장함
             if (SelectedDir != null && SelectedDir.isDirectory) {
                 // 하위 파일들을 반복하면서 이미지 파일만 수집
                 for (file in SelectedDir.listFiles()) {
@@ -98,14 +105,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* 선택된 이미지 Uri를 실제 경로로 복사한 후 MyPictureView에 표시하는 함수 **/
+    /**
+     * 선택된 이미지 Uri를 실제 경로로 복사한 후 MyPictureView에 표시하는 함수
+     * SAF에서 받은 Uri는 직접 접근 불가이기 때문
+     */
     private fun showImage(uri: Uri) {
         val file = File(cacheDir, "temp.jpg")   // 앱 캐시 디렉토리에 임시 저장
-        
+
         // SAF에서 받은 Uri -> 실제 파일 복사
         // SAF로 가져온 이미지는 직접 열 수 없기 때문에, 앱 내부로 복사하는 과정 필요
         contentResolver.openInputStream(uri)?.use { input ->
-            file.outputStream().use { output -> input.copyTo(output) }  // input.copyTo(output) = 파일 복사
+            file.outputStream()
+                .use { output -> input.copyTo(output) }  // input.copyTo(output) = 파일 복사
         }
         // MyPictureView에 이미지 경로 전달 → onDraw()에서 비트맵을 그려줌
         pictureView.imagePath = file.absolutePath
