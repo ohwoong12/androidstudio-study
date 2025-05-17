@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#0000ff</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+    </style>
+
+</resources>
