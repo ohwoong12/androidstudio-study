@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="시작 화면"
+        android:text="방문 or 포장"
         android:textSize="30dp" />
 
 </LinearLayout>
