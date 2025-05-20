@@ -8,38 +8,46 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <!-- 카테고리 -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/store_fragment_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_coffee"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="커피" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_latte"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="라떼" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_drink"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="음료" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_ade"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="에이드" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_dessert"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="디저트" />
     </com.google.android.material.tabs.TabLayout>
 
+    <!-- 세부 메뉴 항목 표시를 위한 레이아웃 -->
     <FrameLayout
+        android:id="@+id/menu_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7">
@@ -47,8 +55,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 </LinearLayout>

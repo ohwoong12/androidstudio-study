@@ -3,7 +3,7 @@ package com.cookandroid.kiosk_project
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuAdapter
+import com.cookandroid.kiosk_project.MenuAdapter
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = categories[position]
         }.attach()
+
+
 
     }
 }

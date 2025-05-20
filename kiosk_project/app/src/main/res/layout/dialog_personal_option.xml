@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 온도 선택 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔥 온도 선택 (Temperature)"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioHot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HOT" />
+
+            <RadioButton
+                android:id="@+id/radioIce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ICE" />
+        </RadioGroup>
+
+        <!-- 샷 추가 선택 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="☕ 샷 추가 (Shot)"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupShot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioShotNone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="없음" />
+
+            <RadioButton
+                android:id="@+id/radioShot1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1샷 추가" />
+
+            <RadioButton
+                android:id="@+id/radioShot2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2샷 추가" />
+        </RadioGroup>
+
+        <!-- 얼음 양 선택 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🧊 얼음 양 (Ice Amount)"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupIce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioIceNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기본" />
+
+            <RadioButton
+                android:id="@+id/radioIceLess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="적게" />
+
+            <RadioButton
+                android:id="@+id/radioIceMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="많이" />
+        </RadioGroup>
+
+        <!-- 당도 선택 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🍯 당도 (Sugar)"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupSugar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioSugarNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기본" />
+
+            <RadioButton
+                android:id="@+id/radioSugarLess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="적게" />
+
+            <RadioButton
+                android:id="@+id/radioSugarNone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="무가당" />
+        </RadioGroup>
+
+        <!-- 컵 선택 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🥤 컵 선택 (Cup)"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupCup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioCupStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="매장용" />
+
+            <RadioButton
+                android:id="@+id/radioCupTakeout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="테이크아웃" />
+        </RadioGroup>
+    </LinearLayout>
+</ScrollView>
