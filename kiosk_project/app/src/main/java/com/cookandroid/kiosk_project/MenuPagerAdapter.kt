@@ -8,6 +8,7 @@ class MenuPagerAdapter(activity: FragmentActivity, private val categories: List<
     FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int = categories.size
+
     override fun createFragment(position: Int): Fragment {
         return MenuFragment.newInstance(categories[position])
     }
