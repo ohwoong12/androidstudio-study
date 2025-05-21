@@ -46,7 +46,7 @@ class MenuFragment : Fragment() {
                 PersonalOptionDialog(requireContext()) { option ->
                     CartManager.addItem(item, option)  // 선택한 옵션과 함께 장바구니 추가
                     cartRecyclerView.adapter?.notifyDataSetChanged()
-                    Toast.makeText(requireContext(), "${item.name} 담김", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(requireContext(), "${item.name} 담김", Toast.LENGTH_SHORT).show()    // 테스트 코드
                 }.show()
             }
         })
