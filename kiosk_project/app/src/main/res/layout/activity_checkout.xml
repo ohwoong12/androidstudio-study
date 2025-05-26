@@ -25,10 +25,10 @@
         android:layout_weight="1"/>
 
     <Button
-        android:id="@+id/btnPay"
+        android:id="@+id/btn_StartPay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="결제 완료"
+        android:text="결제 시작"
         android:background="#2196F3"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

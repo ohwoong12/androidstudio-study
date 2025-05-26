@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.kiosk_project.model.MenuItem
 
 class MenuFragment : Fragment() {
+    private lateinit var cartRecyclerView: RecyclerView
 
     companion object {
         fun newInstance(category: String): MenuFragment {
@@ -33,27 +33,30 @@ class MenuFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_menu_list, container, false)
 
         val menuRecyclerView = view.findViewById<RecyclerView>(R.id.menuRecyclerView)
-        val cartRecyclerView = view.findViewById<RecyclerView>(R.id.cartRecyclerView)
         val btnCheckout = view.findViewById<Button>(R.id.btnCheckout)
-
+        cartRecyclerView = view.findViewById(R.id.cartRecyclerView)
         val category = arguments?.getString("category") ?: "커피"
         val menuList = getDummyMenu(category)
 
         menuRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
         menuRecyclerView.adapter = MenuAdapter(menuList, object : MenuAdapter.OnItemClickListener {
             override fun onItemClick(item: MenuItem) {
-                // 옵션 다이얼로그 띄우기 → 옵션 선택 후 장바구니에 추가
-                PersonalOptionDialog(requireContext()) { option ->
-                    CartManager.addItem(item, option)  // 선택한 옵션과 함께 장바구니 추가
-                    cartRecyclerView.adapter?.notifyDataSetChanged()
-                    //Toast.makeText(requireContext(), "${item.name} 담김", Toast.LENGTH_SHORT).show()    // 테스트 코드
-                }.show()
+                if (category == "디저트") {
+                    CartManager.addItem(item, PersonalOption("HOT", "기본", "보통", "보통", "매장"))
+                } else {
+                    // 옵션 다이얼로그 띄우기 → 옵션 선택 후 장바구니에 추가
+                    PersonalOptionDialog(requireContext()) { option ->
+                        CartManager.addItem(item, option)  // 선택한 옵션과 함께 장바구니 추가
+                        cartRecyclerView.adapter?.notifyDataSetChanged()
+                        //Toast.makeText(requireContext(), "${item.name} 담김", Toast.LENGTH_SHORT).show()    // 테스트 코드
+                    }.show()
+                }
             }
         })
 
         cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         cartRecyclerView.adapter = CartAdapter(CartManager.cartItems) {
-            cartRecyclerView.adapter?.notifyDataSetChanged()
+            cartRecyclerView.adapter?.notifyDataSetChanged()    // 장바구니 초기화
         }
 
         btnCheckout.setOnClickListener {
@@ -62,6 +65,11 @@ class MenuFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cartRecyclerView.adapter?.notifyDataSetChanged()    // 결제 완료 시 되돌아갈 때 담은 메뉴 초기화
     }
 
     private fun getDummyMenu(category: String): List<MenuItem> {
@@ -101,4 +109,6 @@ class MenuFragment : Fragment() {
             else -> emptyList()
         }
     }
+
+
 }

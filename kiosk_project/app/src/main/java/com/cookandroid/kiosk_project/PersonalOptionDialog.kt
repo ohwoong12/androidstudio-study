@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import com.cookandroid.kiosk_project.PersonalOption
 
 class PersonalOptionDialog(
@@ -19,15 +20,15 @@ class PersonalOptionDialog(
             .setPositiveButton("추가") { _, _ ->
                 // 각 RadioGroup에서 선택된 값을 가져오기
                 val temperature =
-                    view.findViewById<RadioButton>(view.findViewById<android.widget.RadioGroup>(R.id.radioGroupTemperature).checkedRadioButtonId).text.toString()
+                    view.findViewById<RadioButton>(view.findViewById<RadioGroup>(R.id.radioGroupTemperature).checkedRadioButtonId).text.toString()
                 val shot =
-                    view.findViewById<RadioButton>(view.findViewById<android.widget.RadioGroup>(R.id.radioGroupShot).checkedRadioButtonId).text.toString()
+                    view.findViewById<RadioButton>(view.findViewById<RadioGroup>(R.id.radioGroupShot).checkedRadioButtonId).text.toString()
                 val ice =
-                    view.findViewById<RadioButton>(view.findViewById<android.widget.RadioGroup>(R.id.radioGroupIce).checkedRadioButtonId).text.toString()
+                    view.findViewById<RadioButton>(view.findViewById<RadioGroup>(R.id.radioGroupIce).checkedRadioButtonId).text.toString()
                 val sugar =
-                    view.findViewById<RadioButton>(view.findViewById<android.widget.RadioGroup>(R.id.radioGroupSugar).checkedRadioButtonId).text.toString()
+                    view.findViewById<RadioButton>(view.findViewById<RadioGroup>(R.id.radioGroupSugar).checkedRadioButtonId).text.toString()
                 val cup =
-                    view.findViewById<RadioButton>(view.findViewById<android.widget.RadioGroup>(R.id.radioGroupCup).checkedRadioButtonId).text.toString()
+                    view.findViewById<RadioButton>(view.findViewById<RadioGroup>(R.id.radioGroupCup).checkedRadioButtonId).text.toString()
 
                 val option = PersonalOption(temperature, shot, ice, sugar, cup)
                 onOptionSelected(option)

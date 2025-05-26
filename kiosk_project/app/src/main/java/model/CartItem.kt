@@ -5,7 +5,7 @@ import com.cookandroid.kiosk_project.PersonalOption
 data class CartItem(
     val menuItem: MenuItem,
     var quantity: Int = 1,
-    val personalOption: PersonalOption = PersonalOption(
+    var personalOption: PersonalOption = PersonalOption(
         temperature = "HOT",
         shot = "기본",
         ice = "보통",

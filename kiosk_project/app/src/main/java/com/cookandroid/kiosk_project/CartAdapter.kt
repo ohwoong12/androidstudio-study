@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.kiosk_project.model.CartItem
@@ -31,17 +32,38 @@ class CartAdapter(
         val optionSugar = view.findViewById<TextView>(R.id.cartItemOptionSugar)
         val optionCup = view.findViewById<TextView>(R.id.cartItemOptionCup)
 
+        val optionLayout = view.findViewById<LinearLayout>(R.id.cartItem_PersonalOption_Layout)
+
         // 데이터를 UI에 바인딩
         fun bind(item: CartItem) {
             name.text = item.menuItem.name
             price.text = "${item.menuItem.price * item.quantity}원"
             quantity.text = item.quantity.toString()
 
-            // 옵션 정보 표시
-            optionShot.text = "샷 추가: ${item.personalOption.shot}"
-            optionIce.text = "얼음: ${item.personalOption.ice}"
-            optionSugar.text = "당도: ${item.personalOption.sugar}"
-            optionCup.text = "컵: ${item.personalOption.cup}"
+            // 디저트 메뉴는 퍼스널 옵션 선택 불가능, 나머지 메뉴는 퍼스널 옵션 선택 가능하게 하는 조건문
+            if (item.menuItem.name.startsWith("마카롱") || item.menuItem.name.startsWith("티라미수")
+                || item.menuItem.name.startsWith("고구마 케이크") || item.menuItem.name.startsWith("크로플")
+                || item.menuItem.name.startsWith("아이스박스")
+            ) {
+                // 퍼스널 옵션 안보이게 하는 코드
+                optionShot.visibility = View.GONE
+                optionCup.visibility = View.GONE
+                optionSugar.visibility = View.GONE
+                optionIce.visibility = View.GONE
+            } else {
+                // 옵션 정보 표시
+                optionShot.text = "샷 추가: ${item.personalOption.shot}"
+                optionIce.text = "얼음: ${item.personalOption.ice}"
+                optionSugar.text = "당도: ${item.personalOption.sugar}"
+                optionCup.text = "컵: ${item.personalOption.cup}"
+
+                // 퍼스널 옵션 표시
+                optionIce.visibility = View.VISIBLE
+                optionShot.visibility = View.VISIBLE
+                optionSugar.visibility = View.VISIBLE
+                optionCup.visibility = View.VISIBLE
+            }
+
 
             // 수량 증가
             btnIncrease.setOnClickListener {
@@ -62,6 +84,15 @@ class CartAdapter(
                 CartManager.removeItem(item.menuItem)
                 notifyDataSetChanged()
                 onCartChanged()
+            }
+
+            // 장바구니 화면에서 퍼스널 옵션 수정할 수 있게 하는 코드
+            optionLayout.setOnClickListener {
+                PersonalOptionDialog(itemView.context) { newOption ->
+                    item.personalOption = newOption
+                    notifyDataSetChanged()
+                    onCartChanged()
+                }.show()
             }
         }
     }
