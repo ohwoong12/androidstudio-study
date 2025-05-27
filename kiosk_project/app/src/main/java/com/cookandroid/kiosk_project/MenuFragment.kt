@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.kiosk_project.model.MenuItem
 
 class MenuFragment : Fragment() {
-    private lateinit var cartRecyclerView: RecyclerView
+    private lateinit var cartRecyclerView: RecyclerView // 장바구니 리스트
 
     companion object {
         fun newInstance(category: String): MenuFragment {
+            // 카테고리 정보를 담아 Fragment 생성
             val fragment = MenuFragment()
             val args = Bundle()
             args.putString("category", category)
@@ -32,15 +33,17 @@ class MenuFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_menu_list, container, false)
 
-        val menuRecyclerView = view.findViewById<RecyclerView>(R.id.menuRecyclerView)
-        val btnCheckout = view.findViewById<Button>(R.id.btnCheckout)
-        cartRecyclerView = view.findViewById(R.id.cartRecyclerView)
-        val category = arguments?.getString("category") ?: "커피"
-        val menuList = getDummyMenu(category)
+        val menuRecyclerView = view.findViewById<RecyclerView>(R.id.menuRecyclerView)   // 메뉴 목록
+        val btnCheckout = view.findViewById<Button>(R.id.btnCheckout)                   // 결제 버튼
+        cartRecyclerView = view.findViewById(R.id.cartRecyclerView)                     // 장바구니 목록
+        val category = arguments?.getString("category") ?: "커피"                  // 카테고리 정보 추출
+        val menuList = getDummyMenu(category)                                           // 메뉴 더미 리스트 생성
 
+        // 메뉴 리스트는 Grid 형태로 3열 배치
         menuRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
         menuRecyclerView.adapter = MenuAdapter(menuList, object : MenuAdapter.OnItemClickListener {
             override fun onItemClick(item: MenuItem) {
+                // 디저트는 옵션 선택 없이 바로 장바구니 추가
                 if (category == "디저트") {
                     CartManager.addItem(item, PersonalOption("HOT", "기본", "보통", "보통", "매장"))
                 } else {
@@ -53,12 +56,15 @@ class MenuFragment : Fragment() {
                 }
             }
         })
-
+        // 장바구니 리스트는 세로 방향으로 표시
         cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         cartRecyclerView.adapter = CartAdapter(CartManager.cartItems) {
-            cartRecyclerView.adapter?.notifyDataSetChanged()    // 장바구니 초기화
+            cartRecyclerView.adapter?.notifyDataSetChanged()    // 장바구니수정 시 변경사항 포함하여 UI 갱신
         }
 
+        /**
+         * 결제 버튼 클릭 시 CheckoutActivity로 이동하는 클릭 이벤튼
+         */
         btnCheckout.setOnClickListener {
             val intent = Intent(requireContext(), CheckoutActivity::class.java)
             startActivity(intent)
@@ -69,9 +75,12 @@ class MenuFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        cartRecyclerView.adapter?.notifyDataSetChanged()    // 결제 완료 시 되돌아갈 때 담은 메뉴 초기화
+        cartRecyclerView.adapter?.notifyDataSetChanged()    // 결제 완료 후 되돌아갈 때 담은 메뉴 초기화
     }
 
+    /**
+     * 각 카테고리별 더미 메뉴 생성하는 함수
+     */
     private fun getDummyMenu(category: String): List<MenuItem> {
         return when (category) {
             "커피" -> listOf(

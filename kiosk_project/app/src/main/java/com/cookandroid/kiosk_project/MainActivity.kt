@@ -25,17 +25,18 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        // xml 레이아웃에서 TabLayout과 ViewPager 연결
         tabLayout=findViewById(R.id.store_fragment_tablayout)
         viewPager=findViewById(R.id.viewPager)
 
+        // 메뉴 카테고리 목록
         val categories = listOf("커피", "라떼", "음료", "디저트")
-        viewPager.adapter = MenuPagerAdapter(this, categories)
+        viewPager.adapter = MenuPagerAdapter(this, categories)  // Viewpager에 카테고리 별 프래그먼트를 제공하는 어댑터 연결
 
+        // 탭과 ViewPager 연동
+        // 탭 클릭 시 해당 카테고리 프래그먼트로 이동
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = categories[position]
         }.attach()
-
-
-
     }
 }
