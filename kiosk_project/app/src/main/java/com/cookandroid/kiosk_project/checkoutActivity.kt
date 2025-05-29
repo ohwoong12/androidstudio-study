@@ -1,6 +1,8 @@
 package com.cookandroid.kiosk_project
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
@@ -44,7 +46,6 @@ class CheckoutActivity : AppCompatActivity() {
         btnPay.setOnClickListener {
             showPeopleCountDialog()
         }
-
     }
 
     /**
@@ -53,7 +54,6 @@ class CheckoutActivity : AppCompatActivity() {
     private fun showPeopleCountDialog() {
         val editText = EditText(this).apply {
             inputType = InputType.TYPE_CLASS_NUMBER
-            //hint = "예: 2"
         }
 
         AlertDialog.Builder(this)
@@ -85,15 +85,9 @@ class CheckoutActivity : AppCompatActivity() {
             .setItems(methods) { _, which ->
                 when (which) {
                     0 -> {
-                        // 현금 결제 선택 시 완료 메시지 출력
-                        AlertDialog.Builder(this)
-                            .setMessage("현금 결제가 완료되었습니다.")
-                            .setPositiveButton("확인") { _, _ -> finish() }
-                            .show()
-                        CartManager.clearCart() // 결제 완료 시 장바구니 초기화
-                        finish()
+                        // 현금 결제 선택 시 완료 메시지 출력 (5초 후 자동 종료)
+                        showAutoDismissDialog("현금 결제가 완료되었습니다.")
                     }
-
                     1 -> {
                         // 카드 선택 → 금액 입력 다이얼로그로 이동
                         showCardPaymentDialog(perPersonAmount)
@@ -120,12 +114,8 @@ class CheckoutActivity : AppCompatActivity() {
             .setPositiveButton("결제") { _, _ ->
                 val enteredAmount = input.text.toString().toIntOrNull()
                 if (enteredAmount != null && enteredAmount >= perPersonAmount) {
-                    AlertDialog.Builder(this)
-                        .setMessage("카드 결제가 완료되었습니다.")
-                        .setPositiveButton("확인") { _, _ -> finish() }
-                        .show()
-                    CartManager.clearCart() // 결제 완료 시 장바구니 초기화
-                    finish()
+                    // 카드 결제 완료 메시지 출력 (5초 후 자동 종료)
+                    showAutoDismissDialog("카드 결제가 완료되었습니다.")
                 } else {
                     Toast.makeText(this, "금액이 부족합니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -134,4 +124,23 @@ class CheckoutActivity : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * 결제 완료 메시지를 5초간 보여준 뒤 자동으로 닫고 장바구니 초기화 및 화면 종료
+     * 메시지에 "5초 후 화면이 돌아갑니다" 문구 추가
+     */
+    private fun showAutoDismissDialog(baseMessage: String) {
+        val message = "$baseMessage\n\n5초 후 화면이 돌아갑니다."
+
+        val dialog = AlertDialog.Builder(this)
+            .setMessage(message)
+            .create()
+
+        dialog.show()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            dialog.dismiss()
+            CartManager.clearCart()
+            finish()
+        }, 5000)
+    }
 }
