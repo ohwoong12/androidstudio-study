@@ -37,7 +37,8 @@ class MenuFragment : Fragment() {
         val btnCheckout = view.findViewById<Button>(R.id.btnCheckout)                   // 결제 버튼
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView)                     // 장바구니 목록
         val category = arguments?.getString("category") ?: "커피"                  // 카테고리 정보 추출
-        val menuList = getDummyMenu(category)                                           // 메뉴 더미 리스트 생성
+        val menuList =
+            getDummyMenu(category)                                           // 메뉴 더미 리스트 생성
 
         // 메뉴 리스트는 Grid 형태로 3열 배치
         menuRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)

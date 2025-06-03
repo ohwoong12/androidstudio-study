@@ -26,7 +26,7 @@ object CartManager {
             cartItems.add(CartItem(menuItem, 1, option))    // 없으면 새 항목 추가 (기본 수량 1)
         }
     }
-    
+
     // 장바구니에서 특정 메뉴 완전 삭제하는 함수
     fun removeItem(menuItem: MenuItem) {
         cartItems.removeAll { it.menuItem == menuItem }
@@ -39,7 +39,7 @@ object CartManager {
 
     // 수량 1 감소, 1보다 작아지면 항목 삭제하는 함수
     fun decreaseQuantity(item: CartItem) {
-        if (item.quantity > 1){
+        if (item.quantity > 1) {
             item.quantity--
         } else cartItems.remove(item)
     }

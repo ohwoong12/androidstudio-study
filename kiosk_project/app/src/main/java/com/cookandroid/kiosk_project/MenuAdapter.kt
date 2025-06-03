@@ -13,7 +13,8 @@ import com.cookandroid.kiosk_project.model.MenuItem
  */
 class MenuAdapter(
     private val menuList: List<MenuItem>,       // 메뉴 항목 리스트
-    private val listener: OnItemClickListener) : // 클릭 이벤트 콜백 인터페이스
+    private val listener: OnItemClickListener
+) : // 클릭 이벤트 콜백 인터페이스
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
 
     // 클릭 이벤트 처리를 위한 인터페이스

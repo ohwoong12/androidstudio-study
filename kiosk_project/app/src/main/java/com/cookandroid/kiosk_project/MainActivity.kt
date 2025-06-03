@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         // xml 레이아웃에서 TabLayout과 ViewPager 연결
-        tabLayout=findViewById(R.id.store_fragment_tablayout)
-        viewPager=findViewById(R.id.viewPager)
+        tabLayout = findViewById(R.id.store_fragment_tablayout)
+        viewPager = findViewById(R.id.viewPager)
 
         // 메뉴 카테고리 목록
         val categories = listOf("커피", "라떼", "음료", "디저트")
