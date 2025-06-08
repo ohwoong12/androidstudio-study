@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,6 +48,7 @@ class MenuFragment : Fragment() {
                 // 디저트는 옵션 선택 없이 바로 장바구니 추가
                 if (category == "디저트") {
                     CartManager.addItem(item, PersonalOption("HOT", "기본", "보통", "보통", "매장"))
+                    Toast.makeText(context, "메뉴가 담겼습니다", Toast.LENGTH_SHORT).show()
                 } else {
                     // 옵션 다이얼로그 띄우기 → 옵션 선택 후 장바구니에 추가
                     PersonalOptionDialog(requireContext()) { option ->
